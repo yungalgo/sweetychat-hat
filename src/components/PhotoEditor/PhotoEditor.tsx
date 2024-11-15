@@ -42,6 +42,36 @@ export const PhotoEditor: React.FC = () => {
         }
     }, []);
 
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        e.preventDefault(); 
+        if (e.touches.length === 1) {
+            isDragging.current = true;
+            const touch = e.touches[0];
+            dragStart.current = {
+                x: touch.clientX - transform.position.x,
+                y: touch.clientY - transform.position.y,
+            };
+        }
+    }, [transform.position]);
+
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        e.preventDefault(); 
+        if (isDragging.current && e.touches.length === 1) {
+            const touch = e.touches[0];
+            setTransform(prev => ({
+                ...prev,
+                position: {
+                    x: touch.clientX - dragStart.current.x,
+                    y: touch.clientY - dragStart.current.y,
+                },
+            }));
+        }
+    }, []);
+
+    const handleTouchEnd = useCallback(() => {
+        isDragging.current = false;
+    }, []);
+
     const handleMouseDown = useCallback((e: React.MouseEvent) => {
         isDragging.current = true;
         dragStart.current = {
@@ -202,9 +232,13 @@ export const PhotoEditor: React.FC = () => {
 
                 <div
                     ref={containerRef}
-                    className="relative w-full max-w-[800px] h-[600px] mx-auto mt-8 border-3 border-[#ff6b2b] rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg" onMouseMove={handleMouseMove}
+                    className="relative w-full max-w-[800px] h-[600px] mx-auto mt-8 border-3 border-[#ff6b2b] rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
+                    onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUp}
                     onMouseLeave={handleMouseUp}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    onTouchCancel={handleTouchEnd}
                 >
                     <div className="absolute top-4 right-4 px-4 py-2 bg-[#ff6b2b]/90 rounded-full text-white text-sm font-semibold flex items-center gap-2 z-10">
                         🤖 AI16Z
@@ -219,6 +253,9 @@ export const PhotoEditor: React.FC = () => {
                         style={getOverlayStyle()}
                         className="absolute top-1/2 left-1/2 cursor-move touch-none filter drop-shadow-lg"
                         onMouseDown={handleMouseDown}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
                     >
                         <img
                             src={hatImage}
@@ -251,10 +288,9 @@ export const PhotoEditor: React.FC = () => {
                 </div>
 
                 {status && (
-                    <div 
-                        className={`fixed bottom-20 right-8 px-6 py-3 rounded-lg ${
-                            status.type === 'error' ? 'bg-red-500' : 'bg-green-600'
-                        } text-white font-medium shadow-lg transition-opacity duration-300 opacity-90`}
+                    <div
+                        className={`fixed bottom-20 right-8 px-6 py-3 rounded-lg ${status.type === 'error' ? 'bg-red-500' : 'bg-green-600'
+                            } text-white font-medium shadow-lg transition-opacity duration-300 opacity-90`}
                     >
                         {status.message}
                     </div>
