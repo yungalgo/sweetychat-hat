@@ -1,6 +1,6 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import hatImage from '../../assets/hat.png';
-import { Position, TouchData, Transform } from './types';
+import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
     const [baseImage, setBaseImage] = useState<string>('');
@@ -17,13 +17,14 @@ export const PhotoEditor: React.FC = () => {
     const overlayRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
     const dragStart = useRef<Position>({ x: 0, y: 0 });
+    const statusTimeoutRef = useRef<NodeJS.Timeout>();
 
 
     const handleBaseImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             if (!file.type.startsWith('image/')) {
-                setStatus({ message: 'Please select an image file', type: 'error' });
+                showStatus('Please select an image file', 'error');
                 return;
             }
 
@@ -32,7 +33,7 @@ export const PhotoEditor: React.FC = () => {
                 const img = new Image();
                 img.onload = () => {
                     setOriginalImageSize({ width: img.width, height: img.height });
-                    setStatus({ message: 'Image loaded successfully', type: 'success' });
+                    showStatus('Image loaded successfully', 'success');
                 };
                 const dataUrl = e.target?.result as string;
                 img.src = dataUrl;
@@ -42,8 +43,29 @@ export const PhotoEditor: React.FC = () => {
         }
     }, []);
 
+    const showStatus = useCallback((message: string, type: 'error' | 'success') => {
+        if (statusTimeoutRef.current) {
+            clearTimeout(statusTimeoutRef.current);
+        }
+
+        setStatus({ message, type });
+
+        statusTimeoutRef.current = setTimeout(() => {
+            setStatus(null);
+        }, 1000);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (statusTimeoutRef.current) {
+                clearTimeout(statusTimeoutRef.current);
+            }
+        };
+    }, []);
+
+
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
-        e.preventDefault(); 
+        e.preventDefault();
         if (e.touches.length === 1) {
             isDragging.current = true;
             const touch = e.touches[0];
@@ -55,7 +77,7 @@ export const PhotoEditor: React.FC = () => {
     }, [transform.position]);
 
     const handleTouchMove = useCallback((e: React.TouchEvent) => {
-        e.preventDefault(); 
+        e.preventDefault();
         if (isDragging.current && e.touches.length === 1) {
             const touch = e.touches[0];
             setTransform(prev => ({
@@ -128,7 +150,7 @@ export const PhotoEditor: React.FC = () => {
 
     const handleSave = useCallback(async () => {
         if (!baseImage || !overlayRef.current || !containerRef.current) {
-            setStatus({ message: 'Please upload an image first', type: 'error' });
+            showStatus('Please upload an image first', 'error');
             return;
         }
 
@@ -193,10 +215,10 @@ export const PhotoEditor: React.FC = () => {
             link.href = canvas.toDataURL('image/png');
             link.click();
 
-            setStatus({ message: 'Image saved successfully', type: 'success' });
+            showStatus('Image saved successfully', 'success');
         } catch (error) {
             console.error('Save error:', error);
-            setStatus({ message: 'Error saving image', type: 'error' });
+            showStatus('Error saving image', 'error');
         }
     }, [baseImage, transform, originalImageSize]);
 
@@ -289,8 +311,11 @@ export const PhotoEditor: React.FC = () => {
 
                 {status && (
                     <div
-                        className={`fixed bottom-20 right-8 px-6 py-3 rounded-lg ${status.type === 'error' ? 'bg-red-500' : 'bg-green-600'
-                            } text-white font-medium shadow-lg transition-opacity duration-300 opacity-90`}
+                        className={`fixed bottom-20 right-8 px-6 py-3 rounded-lg 
+                    ${status.type === 'error' ? 'bg-red-500' : 'bg-green-600'}
+                    text-white font-medium shadow-lg
+                    transition-opacity duration-300
+                    opacity-90 animate-fade-out`}
                     >
                         {status.message}
                     </div>
