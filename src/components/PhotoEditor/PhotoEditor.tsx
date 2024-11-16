@@ -128,7 +128,7 @@ export const PhotoEditor: React.FC = () => {
     const handleScale = useCallback((direction: 'up' | 'down') => {
         setTransform(prev => ({
             ...prev,
-            scale: Math.max(0.1, Math.min(3, prev.scale * (direction === 'up' ? 1.1 : 0.9))),
+            scale: Math.max(0.1, Math.min(7, prev.scale * (direction === 'up' ? 1.1 : 0.9))),
         }));
     }, []);
 
@@ -211,7 +211,7 @@ export const PhotoEditor: React.FC = () => {
             }
 
             const link = document.createElement('a');
-            link.download = 'edited-photo.png';
+            link.download = 'you-are-a-partner-now.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
 
