@@ -1,9 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import hatImage from '../../assets/hat.png';
+import rightImage from '../../assets/right.png';
+import leftImage from '../../assets/left.png';
 import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
     const [baseImage, setBaseImage] = useState<string>('');
+    const [currentHatImage, setCurrentHatImage] = useState<string>(rightImage);
     const [transform, setTransform] = useState<Transform>({
         position: { x: 0, y: 0 },
         rotation: 0,
@@ -133,10 +135,7 @@ export const PhotoEditor: React.FC = () => {
     }, []);
 
     const handleFlip = useCallback(() => {
-        setTransform(prev => ({
-            ...prev,
-            flipX: !prev.flipX,
-        }));
+        setCurrentHatImage(prev => prev === rightImage ? leftImage : rightImage);
     }, []);
 
     const handleReset = useCallback(() => {
@@ -189,7 +188,7 @@ export const PhotoEditor: React.FC = () => {
             const overlayImg = overlayRef.current.querySelector('img');
             if (overlayImg) {
                 const hatImg = new Image();
-                hatImg.src = hatImage;
+                hatImg.src = currentHatImage;
                 await new Promise(resolve => hatImg.onload = resolve);
 
                 const centerX = canvas.width / 2;
@@ -280,7 +279,7 @@ export const PhotoEditor: React.FC = () => {
                         onTouchEnd={handleTouchEnd}
                     >
                         <img
-                            src={hatImage}
+                            src={currentHatImage}
                             alt="Overlay"
                             className="w-[100px] h-auto select-none"
                             draggable={false}
