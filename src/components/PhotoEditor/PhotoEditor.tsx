@@ -322,7 +322,7 @@ export const PhotoEditor: React.FC = () => {
 
                 <div className="fixed bottom-4 right-4">
                     <a
-                        href="https://x.com/ai16zvc"
+                        href="https://x.com/ai16zdao"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm text-[#ff6b2b] hover:text-[#ff8f5a] transition-colors"
