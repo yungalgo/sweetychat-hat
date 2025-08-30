@@ -1,7 +1,7 @@
 /* Neue Haas Grotesk Display Fonts */
 @font-face {
   font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/NHaasGroteskDSStd-Regular.otf') format('opentype');
+  src: url('./assets/fonts/NHaasGroteskDSStd-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/NHaasGroteskDSStd-Medium.otf') format('opentype');
+  src: url('./assets/fonts/NHaasGroteskDSStd-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -17,7 +17,7 @@
 
 @font-face {
   font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/NHaasGroteskDSStd-Bold.otf') format('opentype');
+  src: url('./assets/fonts/NHaasGroteskDSStd-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
