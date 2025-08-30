@@ -257,25 +257,30 @@ export const PhotoEditor: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-4 p-4 w-full min-h-screen font-neue-haas bg-[#0b35f1] text-white overflow-x-hidden">
-            <div className="flex flex-col items-center w-full max-w-7xl mx-auto">
-                <div className="absolute top-4 left-4 z-20">
-                    <img 
-                        src={elizaLogo} 
-                        alt="elizaOS Logo" 
-                        className="h-12 w-auto"
-                    />
-                </div>
-                <div className="text-center mb-8">
-                    <h1 className="text-white text-4xl uppercase tracking-wider font-bold m-0">
-                        Put on your elizaOS hat
+        <div className="flex w-full min-h-screen font-neue-haas bg-[#0b35f1] text-white overflow-hidden">
+            <div className="absolute top-4 left-4 z-20">
+                <img 
+                    src={elizaLogo} 
+                    alt="elizaOS Logo" 
+                    className="h-12 w-auto"
+                />
+            </div>
+            
+            {/* Left Panel - Controls (1/3) */}
+            <div className="w-1/3 flex flex-col gap-6 p-8 pt-20 overflow-y-auto">
+                <div className="text-left">
+                    <h1 className="text-white text-3xl uppercase tracking-wider font-bold">
+                        Put on your
+                    </h1>
+                    <h1 className="text-white text-3xl uppercase tracking-wider font-bold">
+                        elizaOS hat
                     </h1>
                     <p className="text-white/80 text-lg mt-2">
                         BE A PARTNER
                     </p>
                 </div>
 
-                <div className="w-full max-w-md">
+                <div className="w-full">
                     <input
                         type="file"
                         accept="image/*"
@@ -284,9 +289,34 @@ export const PhotoEditor: React.FC = () => {
                     />
                 </div>
 
+                <div className="flex flex-col gap-3">
+                    {['⟲ Rotate Left', '⟳ Rotate Right', '+ Scale Up', '- Scale Down', '↔️ Flip', '🔧 Duct Tape', 'Reset', 'Save Image'].map((text) => (
+                        <button
+                            key={text}
+                            onClick={() => {
+                                if (text === '⟲ Rotate Left') handleRotate('left');
+                                else if (text === '⟳ Rotate Right') handleRotate('right');
+                                else if (text === '+ Scale Up') handleScale('up');
+                                else if (text === '- Scale Down') handleScale('down');
+                                else if (text === '↔️ Flip') handleFlip();
+                                else if (text === '🔧 Duct Tape') handleTape();
+                                else if (text === 'Reset') handleReset();
+                                else if (text === 'Save Image') handleSave();
+                            }}
+                            disabled={text === 'Save Image' && !baseImage}
+                            className={`px-6 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-semibold uppercase tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none`}
+                        >
+                            {text}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Right Panel - Canvas (2/3) */}
+            <div className="w-2/3 flex items-center justify-center p-8">
                 <div
                     ref={containerRef}
-                    className="relative w-full max-w-[800px] h-[600px] mx-auto mt-8 border-3 border-white rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
+                    className="relative w-full h-[80vh] max-h-[800px] border-3 border-white rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
                     onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUp}
                     onMouseLeave={handleMouseUp}
@@ -315,57 +345,35 @@ export const PhotoEditor: React.FC = () => {
                         />
                     </div>
                 </div>
+            </div>
 
-                <div className="flex flex-wrap gap-4 justify-center p-6 bg-white/10 backdrop-blur-sm rounded-xl shadow-lg mt-4 w-full max-w-[800px]">
-                    {['⟲ Rotate Left', '⟳ Rotate Right', '+ Scale Up', '- Scale Down', '↔️ Flip', '🔧 Duct Tape', 'Reset', 'Save Image'].map((text) => (
-                        <button
-                            key={text}
-                            onClick={() => {
-                                if (text === '⟲ Rotate Left') handleRotate('left');
-                                else if (text === '⟳ Rotate Right') handleRotate('right');
-                                else if (text === '+ Scale Up') handleScale('up');
-                                else if (text === '- Scale Down') handleScale('down');
-                                else if (text === '↔️ Flip') handleFlip();
-                                else if (text === '🔧 Duct Tape') handleTape();
-                                else if (text === 'Reset') handleReset();
-                                else if (text === 'Save Image') handleSave();
-                            }}
-                            disabled={text === 'Save Image' && !baseImage}
-                            className={`px-6 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-semibold uppercase tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none`}
-                        >
-                            {text}
-                        </button>
-                    ))}
-                </div>
-
-                {status && (
-                    <div
-                        className={`fixed bottom-20 right-8 px-6 py-3 rounded-lg 
+            {status && (
+                <div
+                    className={`fixed bottom-20 right-8 px-6 py-3 rounded-lg 
                     ${status.type === 'error' ? 'bg-red-500' : 'bg-green-600'}
                     text-white font-medium shadow-lg
                     transition-opacity duration-300
                     opacity-90 animate-fade-out`}
-                    >
-                        {status.message}
-                    </div>
-                )}
-
-                <div className="fixed bottom-4 right-4">
-                    <a
-                        href="https://elizaos.ai"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-white hover:text-white/80 transition-colors"
-                    >
-                        <span>© 2025 elizaOS™</span>
-                        <svg
-                            className="w-4 h-4 fill-current"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                        >
-                        </svg>
-                    </a>
+                >
+                    {status.message}
                 </div>
+            )}
+
+            <div className="fixed bottom-4 right-4">
+                <a
+                    href="https://elizaos.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-white hover:text-white/80 transition-colors"
+                >
+                    <span>© 2025 elizaOS™</span>
+                    <svg
+                        className="w-4 h-4 fill-current"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                    >
+                    </svg>
+                </a>
             </div>
         </div>
     );
