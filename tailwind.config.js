@@ -7,7 +7,8 @@ module.exports = {
     theme: {
       extend: {
         fontFamily: {
-          'neue-haas': ['Neue Haas Grotesk Display', 'sans-serif'],
+          'neue-haas-display': ['Neue Haas Grotesk Display', 'sans-serif'],
+          'neue-haas-text': ['Neue Haas Grotesk Text', 'sans-serif'],
         },
         animation: {
           'fadeIn': 'fadeIn 0.3s ease',

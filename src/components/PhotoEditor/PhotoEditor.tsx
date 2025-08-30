@@ -228,7 +228,7 @@ export const PhotoEditor: React.FC = () => {
                 }
                 ctx.scale(transform.scale, transform.scale);
 
-                const overlayWidth = 100 * scaleX;
+                const overlayWidth = 400 * scaleX;
                 const overlayHeight = (overlayWidth * hatImg.height) / hatImg.width;
                 ctx.drawImage(hatImg, -overlayWidth / 2, -overlayHeight / 2, overlayWidth, overlayHeight);
 
@@ -236,7 +236,7 @@ export const PhotoEditor: React.FC = () => {
             }
 
             const link = document.createElement('a');
-            link.download = 'you-are-a-partner-now.png';
+            link.download = 'eliza-hat.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
 
@@ -257,7 +257,7 @@ export const PhotoEditor: React.FC = () => {
     };
 
     return (
-        <div className="flex w-full min-h-screen font-neue-haas bg-[#0b35f1] text-white overflow-hidden">
+        <div className="flex w-full min-h-screen bg-[#0b35f1] text-white overflow-hidden">
             <div className="absolute top-4 left-4 z-20">
                 <img 
                     src={elizaLogo} 
@@ -269,15 +269,12 @@ export const PhotoEditor: React.FC = () => {
             {/* Left Panel - Controls (1/3) */}
             <div className="w-1/3 flex flex-col gap-6 p-8 pt-20 overflow-y-auto">
                 <div className="text-left">
-                    <h1 className="text-white text-3xl uppercase tracking-wider font-bold">
+                    <h1 className="text-white text-3xl tracking-wider font-neue-haas-display font-bold">
                         Put on your
                     </h1>
-                    <h1 className="text-white text-3xl uppercase tracking-wider font-bold">
+                    <h1 className="text-white text-3xl tracking-wider font-neue-haas-display font-bold">
                         elizaOS hat
                     </h1>
-                    <p className="text-white/80 text-lg mt-2">
-                        BE A PARTNER
-                    </p>
                 </div>
 
                 <div className="w-full">
@@ -285,30 +282,75 @@ export const PhotoEditor: React.FC = () => {
                         type="file"
                         accept="image/*"
                         onChange={handleBaseImageUpload}
-                        className="w-full p-3 border-2 border-white rounded-lg bg-white/10 text-white cursor-pointer transition-all hover:border-white hover:bg-white/20"
+                        className="w-full p-3 border-2 border-white rounded-lg bg-white/10 text-white cursor-pointer font-neue-haas-text font-normal transition-all hover:border-white hover:bg-white/20"
                     />
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    {['⟲ Rotate Left', '⟳ Rotate Right', '+ Scale Up', '- Scale Down', '↔️ Flip', '🔧 Duct Tape', 'Reset', 'Save Image'].map((text) => (
+                    {/* Rotate buttons */}
+                    <div className="flex gap-3">
                         <button
-                            key={text}
-                            onClick={() => {
-                                if (text === '⟲ Rotate Left') handleRotate('left');
-                                else if (text === '⟳ Rotate Right') handleRotate('right');
-                                else if (text === '+ Scale Up') handleScale('up');
-                                else if (text === '- Scale Down') handleScale('down');
-                                else if (text === '↔️ Flip') handleFlip();
-                                else if (text === '🔧 Duct Tape') handleTape();
-                                else if (text === 'Reset') handleReset();
-                                else if (text === 'Save Image') handleSave();
-                            }}
-                            disabled={text === 'Save Image' && !baseImage}
-                            className={`px-6 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-semibold uppercase tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none`}
+                            onClick={() => handleRotate('left')}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
                         >
-                            {text}
+                            ⟲ Rotate left
                         </button>
-                    ))}
+                        <button
+                            onClick={() => handleRotate('right')}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                        >
+                            ⟳ Rotate right
+                        </button>
+                    </div>
+                    
+                    {/* Scale buttons */}
+                    <div className="flex gap-3">
+                        <button
+                            onClick={() => handleScale('up')}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                        >
+                            ⊕ Scale up
+                        </button>
+                        <button
+                            onClick={() => handleScale('down')}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                        >
+                            ⊖ Scale down
+                        </button>
+                    </div>
+                    
+                    {/* Flip and Tape buttons */}
+                    <div className="flex gap-3">
+                        <button
+                            onClick={handleFlip}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                        >
+                            ↔️ Flip
+                        </button>
+                        <button
+                            onClick={handleTape}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                        >
+                            🔧 Duct tape
+                        </button>
+                    </div>
+                    
+                    {/* Reset and Save buttons */}
+                    <div className="flex gap-3">
+                        <button
+                            onClick={handleReset}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                        >
+                            Reset
+                        </button>
+                        <button
+                            onClick={handleSave}
+                            disabled={!baseImage}
+                            className="flex-1 px-4 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
+                        >
+                            Save image
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -340,7 +382,7 @@ export const PhotoEditor: React.FC = () => {
                         <img
                             src={currentHatImage}
                             alt="Overlay"
-                            className="w-[100px] h-auto select-none"
+                            className="w-[400px] h-auto select-none"
                             draggable={false}
                         />
                     </div>
@@ -364,7 +406,7 @@ export const PhotoEditor: React.FC = () => {
                     href="https://elizaos.ai"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-white hover:text-white/80 transition-colors"
+                    className="inline-flex items-center gap-2 text-sm text-white hover:text-white/80 font-neue-haas-text font-normal transition-colors"
                 >
                     <span>© 2025 elizaOS™</span>
                     <svg
