@@ -258,7 +258,7 @@ export const PhotoEditor: React.FC = () => {
 
     return (
         <div className="flex w-full min-h-screen bg-[#0b35f1] text-white overflow-hidden">
-            <div className="absolute top-4 left-4 z-20">
+            <div className="absolute top-8 left-8 z-20">
                 <img 
                     src={elizaLogo} 
                     alt="elizaOS Logo" 
@@ -267,13 +267,10 @@ export const PhotoEditor: React.FC = () => {
             </div>
             
             {/* Left Panel - Controls (1/3) */}
-            <div className="w-1/3 flex flex-col gap-6 p-8 pt-20 overflow-y-auto">
+            <div className="w-1/3 flex flex-col gap-6 p-8 pt-24 overflow-y-auto">
                 <div className="text-left">
-                    <h1 className="text-white text-3xl tracking-wider font-neue-haas-display font-bold">
-                        Put on your
-                    </h1>
-                    <h1 className="text-white text-3xl tracking-wider font-neue-haas-display font-bold">
-                        elizaOS hat
+                    <h1 className="text-white text-3xl tracking-wider font-neue-haas-display font-thin">
+                        Put on your elizaOS hat
                     </h1>
                 </div>
 
