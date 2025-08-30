@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import rightImage from '../../assets/right.png';
 import leftImage from '../../assets/left.png';
+import elizaLogo from '../../assets/Logo_ElizaOS_Blue_RGB.png';
 import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
@@ -231,13 +232,20 @@ export const PhotoEditor: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-4 p-4 w-full min-h-screen font-['Space_Grotesk'] bg-[#1a1a1a] text-[#f0f0f0] overflow-x-hidden">
+        <div className="flex flex-col items-center gap-4 p-4 w-full min-h-screen font-neue-haas bg-[#1a1a1a] text-[#f0f0f0] overflow-x-hidden">
             <div className="flex flex-col items-center w-full max-w-7xl mx-auto">
+                <div className="absolute top-4 left-4 z-20">
+                    <img 
+                        src={elizaLogo} 
+                        alt="elizaOS Logo" 
+                        className="h-12 w-auto"
+                    />
+                </div>
                 <div className="text-center mb-8">
-                    <h1 className="text-[#ff6b2b] text-4xl uppercase tracking-wider font-bold m-0">
-                        Put on your AI16Z hat
+                    <h1 className="text-[#0b35f1] text-4xl uppercase tracking-wider font-bold m-0">
+                        Put on your elizaOS hat
                     </h1>
-                    <p className="text-[#ff8f5a] text-lg mt-2">
+                    <p className="text-[#0b35f1]/80 text-lg mt-2">
                         BE A PARTNER
                     </p>
                 </div>
@@ -247,13 +255,13 @@ export const PhotoEditor: React.FC = () => {
                         type="file"
                         accept="image/*"
                         onChange={handleBaseImageUpload}
-                        className="w-full p-3 border-2 border-[#ff6b2b] rounded-lg bg-[#2a2a2a] text-white cursor-pointer transition-all hover:border-[#ff8f5a] hover:bg-[#3a3a3a]"
+                        className="w-full p-3 border-2 border-[#0b35f1] rounded-lg bg-[#2a2a2a] text-white cursor-pointer transition-all hover:border-[#0b35f1]/80 hover:bg-[#3a3a3a]"
                     />
                 </div>
 
                 <div
                     ref={containerRef}
-                    className="relative w-full max-w-[800px] h-[600px] mx-auto mt-8 border-3 border-[#ff6b2b] rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
+                    className="relative w-full max-w-[800px] h-[600px] mx-auto mt-8 border-3 border-[#0b35f1] rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
                     onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUp}
                     onMouseLeave={handleMouseUp}
@@ -261,8 +269,8 @@ export const PhotoEditor: React.FC = () => {
                     onTouchEnd={handleTouchEnd}
                     onTouchCancel={handleTouchEnd}
                 >
-                    <div className="absolute top-4 right-4 px-4 py-2 bg-[#ff6b2b]/90 rounded-full text-white text-sm font-semibold flex items-center gap-2 z-10">
-                        🤖 AI16Z
+                    <div className="absolute top-4 right-4 px-4 py-2 bg-[#0b35f1]/90 rounded-full text-white text-sm font-semibold flex items-center gap-2 z-10">
+                        🤖 elizaOS
                     </div>
 
                     {baseImage && (
@@ -301,7 +309,7 @@ export const PhotoEditor: React.FC = () => {
                                 else if (text === 'Save Image') handleSave();
                             }}
                             disabled={text === 'Save Image' && !baseImage}
-                            className={`px-6 py-3 rounded-lg bg-[#ff6b2b] text-white cursor-pointer text-base font-semibold uppercase tracking-wider transition-all hover:bg-[#ff8f5a] hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-600 disabled:cursor-not-allowed disabled:transform-none`}
+                            className={`px-6 py-3 rounded-lg bg-[#0b35f1] text-white cursor-pointer text-base font-semibold uppercase tracking-wider transition-all hover:bg-[#0b35f1]/80 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-600 disabled:cursor-not-allowed disabled:transform-none`}
                         >
                             {text}
                         </button>
@@ -322,18 +330,17 @@ export const PhotoEditor: React.FC = () => {
 
                 <div className="fixed bottom-4 right-4">
                     <a
-                        href="https://x.com/ai16zdao"
+                        href="https://elizaos.ai"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-[#ff6b2b] hover:text-[#ff8f5a] transition-colors"
+                        className="inline-flex items-center gap-2 text-sm text-[#0b35f1] hover:text-[#0b35f1]/80 transition-colors"
                     >
-                        <span>© 2024 AI16Z™</span>
+                        <span>© 2025 elizaOS™</span>
                         <svg
                             className="w-4 h-4 fill-current"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                         >
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                         </svg>
                     </a>
                 </div>
