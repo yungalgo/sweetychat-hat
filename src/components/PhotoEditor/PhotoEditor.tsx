@@ -3,7 +3,7 @@ import rightImage from '../../assets/right.png';
 import leftImage from '../../assets/left.png';
 import rightTapeImage from '../../assets/right-tape.png';
 import leftTapeImage from '../../assets/left-tape.png';
-import elizaLogo from '../../assets/Logo_ElizaOS_Blue_RGB.png';
+import elizaLogo from '../../assets/Logo_ElizaOS_White_RGB.svg';
 import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
@@ -257,7 +257,7 @@ export const PhotoEditor: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-4 p-4 w-full min-h-screen font-neue-haas bg-[#1a1a1a] text-[#f0f0f0] overflow-x-hidden">
+        <div className="flex flex-col items-center gap-4 p-4 w-full min-h-screen font-neue-haas bg-[#0b35f1] text-white overflow-x-hidden">
             <div className="flex flex-col items-center w-full max-w-7xl mx-auto">
                 <div className="absolute top-4 left-4 z-20">
                     <img 
@@ -267,10 +267,10 @@ export const PhotoEditor: React.FC = () => {
                     />
                 </div>
                 <div className="text-center mb-8">
-                    <h1 className="text-[#0b35f1] text-4xl uppercase tracking-wider font-bold m-0">
+                    <h1 className="text-white text-4xl uppercase tracking-wider font-bold m-0">
                         Put on your elizaOS hat
                     </h1>
-                    <p className="text-[#0b35f1]/80 text-lg mt-2">
+                    <p className="text-white/80 text-lg mt-2">
                         BE A PARTNER
                     </p>
                 </div>
@@ -280,13 +280,13 @@ export const PhotoEditor: React.FC = () => {
                         type="file"
                         accept="image/*"
                         onChange={handleBaseImageUpload}
-                        className="w-full p-3 border-2 border-[#0b35f1] rounded-lg bg-[#2a2a2a] text-white cursor-pointer transition-all hover:border-[#0b35f1]/80 hover:bg-[#3a3a3a]"
+                        className="w-full p-3 border-2 border-white rounded-lg bg-white/10 text-white cursor-pointer transition-all hover:border-white hover:bg-white/20"
                     />
                 </div>
 
                 <div
                     ref={containerRef}
-                    className="relative w-full max-w-[800px] h-[600px] mx-auto mt-8 border-3 border-[#0b35f1] rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
+                    className="relative w-full max-w-[800px] h-[600px] mx-auto mt-8 border-3 border-white rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
                     onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUp}
                     onMouseLeave={handleMouseUp}
@@ -294,10 +294,6 @@ export const PhotoEditor: React.FC = () => {
                     onTouchEnd={handleTouchEnd}
                     onTouchCancel={handleTouchEnd}
                 >
-                    <div className="absolute top-4 right-4 px-4 py-2 bg-[#0b35f1]/90 rounded-full text-white text-sm font-semibold flex items-center gap-2 z-10">
-                        🤖 elizaOS
-                    </div>
-
                     {baseImage && (
                         <img src={baseImage} alt="Base" className="w-full h-full object-contain" />
                     )}
@@ -320,7 +316,7 @@ export const PhotoEditor: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-4 justify-center p-6 bg-[#2a2a2a] rounded-xl shadow-lg mt-4 w-full max-w-[800px]">
+                <div className="flex flex-wrap gap-4 justify-center p-6 bg-white/10 backdrop-blur-sm rounded-xl shadow-lg mt-4 w-full max-w-[800px]">
                     {['⟲ Rotate Left', '⟳ Rotate Right', '+ Scale Up', '- Scale Down', '↔️ Flip', '🔧 Duct Tape', 'Reset', 'Save Image'].map((text) => (
                         <button
                             key={text}
@@ -335,7 +331,7 @@ export const PhotoEditor: React.FC = () => {
                                 else if (text === 'Save Image') handleSave();
                             }}
                             disabled={text === 'Save Image' && !baseImage}
-                            className={`px-6 py-3 rounded-lg bg-[#0b35f1] text-white cursor-pointer text-base font-semibold uppercase tracking-wider transition-all hover:bg-[#0b35f1]/80 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-600 disabled:cursor-not-allowed disabled:transform-none`}
+                            className={`px-6 py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-base font-semibold uppercase tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none`}
                         >
                             {text}
                         </button>
@@ -359,7 +355,7 @@ export const PhotoEditor: React.FC = () => {
                         href="https://elizaos.ai"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-[#0b35f1] hover:text-[#0b35f1]/80 transition-colors"
+                        className="inline-flex items-center gap-2 text-sm text-white hover:text-white/80 transition-colors"
                     >
                         <span>© 2025 elizaOS™</span>
                         <svg
