@@ -1,12 +1,16 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import rightImage from '../../assets/right.png';
 import leftImage from '../../assets/left.png';
+import rightTapeImage from '../../assets/right-tape.png';
+import leftTapeImage from '../../assets/left-tape.png';
 import elizaLogo from '../../assets/Logo_ElizaOS_Blue_RGB.png';
 import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
     const [baseImage, setBaseImage] = useState<string>('');
     const [currentHatImage, setCurrentHatImage] = useState<string>(rightImage);
+    const [hasTape, setHasTape] = useState<boolean>(false);
+    const [isFlipped, setIsFlipped] = useState<boolean>(false);
     const [transform, setTransform] = useState<Transform>({
         position: { x: 0, y: 0 },
         rotation: 0,
@@ -136,8 +140,26 @@ export const PhotoEditor: React.FC = () => {
     }, []);
 
     const handleFlip = useCallback(() => {
-        setCurrentHatImage(prev => prev === rightImage ? leftImage : rightImage);
-    }, []);
+        setIsFlipped(prev => !prev);
+        // Determine which image to show based on flip state and tape state
+        if (!isFlipped) {
+            // Currently showing right, switch to left
+            setCurrentHatImage(hasTape ? leftTapeImage : leftImage);
+        } else {
+            // Currently showing left, switch to right
+            setCurrentHatImage(hasTape ? rightTapeImage : rightImage);
+        }
+    }, [isFlipped, hasTape]);
+
+    const handleTape = useCallback(() => {
+        setHasTape(prev => !prev);
+        // Update the current image based on the new tape state and current flip state
+        if (isFlipped) {
+            setCurrentHatImage(!hasTape ? leftTapeImage : leftImage);
+        } else {
+            setCurrentHatImage(!hasTape ? rightTapeImage : rightImage);
+        }
+    }, [isFlipped, hasTape]);
 
     const handleReset = useCallback(() => {
         setTransform({
@@ -146,6 +168,9 @@ export const PhotoEditor: React.FC = () => {
             scale: 1,
             flipX: false,
         });
+        setHasTape(false);
+        setIsFlipped(false);
+        setCurrentHatImage(rightImage);
     }, []);
 
     const handleSave = useCallback(async () => {
@@ -296,7 +321,7 @@ export const PhotoEditor: React.FC = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-4 justify-center p-6 bg-[#2a2a2a] rounded-xl shadow-lg mt-4 w-full max-w-[800px]">
-                    {['⟲ Rotate Left', '⟳ Rotate Right', '+ Scale Up', '- Scale Down', '↔️ Flip', 'Reset', 'Save Image'].map((text) => (
+                    {['⟲ Rotate Left', '⟳ Rotate Right', '+ Scale Up', '- Scale Down', '↔️ Flip', '🔧 Duct Tape', 'Reset', 'Save Image'].map((text) => (
                         <button
                             key={text}
                             onClick={() => {
@@ -305,6 +330,7 @@ export const PhotoEditor: React.FC = () => {
                                 else if (text === '+ Scale Up') handleScale('up');
                                 else if (text === '- Scale Down') handleScale('down');
                                 else if (text === '↔️ Flip') handleFlip();
+                                else if (text === '🔧 Duct Tape') handleTape();
                                 else if (text === 'Reset') handleReset();
                                 else if (text === 'Save Image') handleSave();
                             }}
