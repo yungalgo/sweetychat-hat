@@ -263,27 +263,33 @@ export const PhotoEditor: React.FC = () => {
             
             {/* Mobile: Bottom Panel, Desktop: Left Panel - Controls */}
             <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-20 lg:pt-28 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
-                <div className="text-center lg:text-left">
-                    <h1 className="text-gray-800 text-xl lg:text-3xl tracking-wider font-neue-haas-display font-medium">
-                        Put on your Sweetyhat
-                    </h1>
+                {/* Title Panel with Glass Effect */}
+                <div className="backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 shadow-lg p-4 lg:p-6">
+                    <div className="text-center lg:text-left">
+                        <h1 className="text-gray-800 text-xl lg:text-3xl tracking-wider font-neue-haas-display font-medium drop-shadow-sm">
+                            Put on your Sweetyhat
+                        </h1>
+                    </div>
                 </div>
 
-                <fieldset className="mb-4">
-                    <div className="field-row">
-                        <input
-                            id="file-upload"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleBaseImageUpload}
-                            className="w-full"
-                        />
-                    </div>
-                </fieldset>
+                {/* File Upload Panel with Glass Effect */}
+                <div className="backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 shadow-lg p-4 lg:p-6">
+                    <fieldset>
+                        <div className="field-row">
+                            <input
+                                id="file-upload"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleBaseImageUpload}
+                                className="w-full"
+                            />
+                        </div>
+                    </fieldset>
+                </div>
 
-
-
-                <fieldset>
+                {/* Buttons Panel with Glass Effect */}
+                <div className="backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 shadow-lg p-4 lg:p-6">
+                    <fieldset>
                     <div className="flex flex-col gap-2">
                         {/* Rotate buttons */}
                         <div className="flex gap-2">
@@ -344,7 +350,8 @@ export const PhotoEditor: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                </fieldset>
+                    </fieldset>
+                </div>
             </div>
 
             {/* Mobile: Top Panel, Desktop: Right Panel - Canvas */}
