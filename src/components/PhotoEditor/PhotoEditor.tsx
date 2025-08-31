@@ -212,7 +212,9 @@ export const PhotoEditor: React.FC = () => {
                 }
                 ctx.scale(transform.scale, transform.scale);
 
-                const overlayWidth = 400 * scaleX;
+                // Get the actual displayed size of the overlay image
+                const overlayRect = overlayImg.getBoundingClientRect();
+                const overlayWidth = overlayRect.width * scaleX;
                 const overlayHeight = (overlayWidth * hatImg.height) / hatImg.width;
                 ctx.drawImage(hatImg, -overlayWidth / 2, -overlayHeight / 2, overlayWidth, overlayHeight);
 
@@ -229,7 +231,7 @@ export const PhotoEditor: React.FC = () => {
             console.error('Save error:', error);
             showStatus('Error saving image', 'error');
         }
-    }, [baseImage, transform, originalImageSize]);
+    }, [baseImage, transform, originalImageSize, currentHatImage]);
 
     const getOverlayStyle = () => {
         return {
