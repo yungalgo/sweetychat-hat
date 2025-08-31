@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/sweetychat-hat/static/css/main.10ec7f86.css",
+    "main.js": "/sweetychat-hat/static/js/main.983273ef.js",
+    "static/js/453.67636c83.chunk.js": "/sweetychat-hat/static/js/453.67636c83.chunk.js",
+    "static/media/horizontal-logo.svg": "/sweetychat-hat/static/media/horizontal-logo.b9e7b4bbae39283e12f1f9ce7c5f8355.svg",
+    "static/media/right.png": "/sweetychat-hat/static/media/right.a4b6d733018f1312077e.png",
+    "static/media/left.png": "/sweetychat-hat/static/media/left.a65fe1a6b13736bfc4c1.png",
+    "static/media/RuneScape-Bold-12.otf": "/sweetychat-hat/static/media/RuneScape-Bold-12.32da1c931ee534d5fe81.otf",
+    "index.html": "/sweetychat-hat/index.html",
+    "main.10ec7f86.css.map": "/sweetychat-hat/static/css/main.10ec7f86.css.map",
+    "main.983273ef.js.map": "/sweetychat-hat/static/js/main.983273ef.js.map",
+    "453.67636c83.chunk.js.map": "/sweetychat-hat/static/js/453.67636c83.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.10ec7f86.css",
+    "static/js/main.983273ef.js"
+  ]
+}
