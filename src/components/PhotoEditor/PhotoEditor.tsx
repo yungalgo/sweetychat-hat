@@ -347,7 +347,7 @@ export const PhotoEditor: React.FC = () => {
 
             {/* Mobile: Top Panel, Desktop: Right Panel - Canvas */}
             <div className="order-1 lg:order-2 w-full lg:w-2/3 flex items-center justify-center p-4 lg:p-8 flex-1 lg:flex-none lg:h-auto pt-16 lg:pt-8">
-                <div className="window w-full max-w-[600px] lg:max-w-[700px]">
+                <div className="window w-full max-w-[400px] lg:max-w-none lg:w-full">
                     <div className="title-bar">
                         <div className="title-bar-text">Hat Editor</div>
                         <div className="title-bar-controls">
@@ -359,8 +359,7 @@ export const PhotoEditor: React.FC = () => {
                     <div className="window-body" style={{ padding: '0', margin: '0' }}>
                         <div
                             ref={containerRef}
-                            className="relative overflow-hidden touch-none bg-[#2a2a2a] aspect-square w-full h-full"
-                            style={{ maxHeight: '600px' }}
+                            className="relative w-full aspect-square lg:h-[80vh] lg:max-h-[800px] overflow-hidden touch-none bg-[#2a2a2a]"
                             onMouseMove={handleMouseMove}
                             onMouseUp={handleMouseUp}
                             onMouseLeave={handleMouseUp}
