@@ -1,14 +1,21 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import rightImage from '../../assets/right.png';
-import leftImage from '../../assets/left.png';
-import rightTapeImage from '../../assets/right-tape.png';
-import leftTapeImage from '../../assets/left-tape.png';
+// Blue hat images
+import blueRightImage from '../../assets/blue-right.png';
+import blueLeftImage from '../../assets/blue-left.png';
+import blueRightTapeImage from '../../assets/blue-right-tape.png';
+import blueLeftTapeImage from '../../assets/blue-left-tape.png';
+// Orange hat images
+import orangeRightImage from '../../assets/orange-right.png';
+import orangeLeftImage from '../../assets/orange-left.png';
+import orangeRightTapeImage from '../../assets/orange-right-tape.png';
+import orangeLeftTapeImage from '../../assets/orange-left-tape.png';
 import elizaLogo from '../../assets/Logo_ElizaOS_White_RGB.svg';
 import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
     const [baseImage, setBaseImage] = useState<string>('');
-    const [currentHatImage, setCurrentHatImage] = useState<string>(rightImage);
+    const [hatColor, setHatColor] = useState<'orange' | 'blue'>('orange'); // Orange is default
+    const [currentHatImage, setCurrentHatImage] = useState<string>(orangeRightImage);
     const [hasTape, setHasTape] = useState<boolean>(false);
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
     const [transform, setTransform] = useState<Transform>({
@@ -25,6 +32,23 @@ export const PhotoEditor: React.FC = () => {
     const isDragging = useRef(false);
     const dragStart = useRef<Position>({ x: 0, y: 0 });
     const statusTimeoutRef = useRef<NodeJS.Timeout>();
+
+    // Helper function to get the correct hat image based on color, orientation, and tape
+    const getHatImage = useCallback((color: 'orange' | 'blue', flipped: boolean, tape: boolean) => {
+        if (color === 'orange') {
+            if (flipped) {
+                return tape ? orangeLeftTapeImage : orangeLeftImage;
+            } else {
+                return tape ? orangeRightTapeImage : orangeRightImage;
+            }
+        } else {
+            if (flipped) {
+                return tape ? blueLeftTapeImage : blueLeftImage;
+            } else {
+                return tape ? blueRightTapeImage : blueRightImage;
+            }
+        }
+    }, []);
 
 
     const handleBaseImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,26 +164,25 @@ export const PhotoEditor: React.FC = () => {
     }, []);
 
     const handleFlip = useCallback(() => {
-        setIsFlipped(prev => !prev);
-        // Determine which image to show based on flip state and tape state
-        if (!isFlipped) {
-            // Currently showing right, switch to left
-            setCurrentHatImage(hasTape ? leftTapeImage : leftImage);
-        } else {
-            // Currently showing left, switch to right
-            setCurrentHatImage(hasTape ? rightTapeImage : rightImage);
-        }
-    }, [isFlipped, hasTape]);
+        setIsFlipped(prev => {
+            const newFlipped = !prev;
+            setCurrentHatImage(getHatImage(hatColor, newFlipped, hasTape));
+            return newFlipped;
+        });
+    }, [hatColor, hasTape, getHatImage]);
 
     const handleTape = useCallback(() => {
-        setHasTape(prev => !prev);
-        // Update the current image based on the new tape state and current flip state
-        if (isFlipped) {
-            setCurrentHatImage(!hasTape ? leftTapeImage : leftImage);
-        } else {
-            setCurrentHatImage(!hasTape ? rightTapeImage : rightImage);
-        }
-    }, [isFlipped, hasTape]);
+        setHasTape(prev => {
+            const newTape = !prev;
+            setCurrentHatImage(getHatImage(hatColor, isFlipped, newTape));
+            return newTape;
+        });
+    }, [hatColor, isFlipped, getHatImage]);
+
+    const handleColorChange = useCallback((newColor: 'orange' | 'blue') => {
+        setHatColor(newColor);
+        setCurrentHatImage(getHatImage(newColor, isFlipped, hasTape));
+    }, [isFlipped, hasTape, getHatImage]);
 
     const handleReset = useCallback(() => {
         setTransform({
@@ -170,8 +193,8 @@ export const PhotoEditor: React.FC = () => {
         });
         setHasTape(false);
         setIsFlipped(false);
-        setCurrentHatImage(rightImage);
-    }, []);
+        setCurrentHatImage(getHatImage(hatColor, false, false));
+    }, [hatColor, getHatImage]);
 
     const handleSave = useCallback(async () => {
         if (!baseImage || !overlayRef.current || !containerRef.current) {
@@ -281,6 +304,32 @@ export const PhotoEditor: React.FC = () => {
                         onChange={handleBaseImageUpload}
                         className="w-full p-3 border-2 border-white rounded-lg bg-white/10 text-white cursor-pointer font-neue-haas-text font-normal transition-all hover:border-white hover:bg-white/20"
                     />
+                </div>
+
+                {/* Color Selector */}
+                <div className="w-full">
+                    <div className="flex flex-col gap-2">
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => handleColorChange('orange')}
+                                className={`flex-1 px-4 py-3 rounded-lg cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all
+                                    ${hatColor === 'orange' 
+                                        ? 'bg-orange-500 text-white hover:bg-orange-600' 
+                                        : 'bg-white/20 text-white hover:bg-white/30'}`}
+                            >
+                                🟠 Orange
+                            </button>
+                            <button
+                                onClick={() => handleColorChange('blue')}
+                                className={`flex-1 px-4 py-3 rounded-lg cursor-pointer text-base font-neue-haas-text font-normal tracking-wider transition-all
+                                    ${hatColor === 'blue' 
+                                        ? 'bg-blue-500 text-white hover:bg-blue-600' 
+                                        : 'bg-white/20 text-white hover:bg-white/30'}`}
+                            >
+                                🔵 Blue
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="flex flex-col gap-3">
