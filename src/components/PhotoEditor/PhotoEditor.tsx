@@ -282,15 +282,22 @@ export const PhotoEditor: React.FC = () => {
     return (
         <div className="flex flex-col lg:flex-row w-full min-h-screen bg-[#0b35f1] text-white overflow-hidden">
             <div className="absolute top-4 left-4 lg:top-8 lg:left-8 z-20">
-                <img 
-                    src={elizaLogo} 
-                    alt="elizaOS Logo" 
-                    className="h-8 lg:h-12 w-auto"
-                />
+                <a 
+                    href="https://elizaos.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block hover:opacity-80 transition-opacity"
+                >
+                    <img 
+                        src={elizaLogo} 
+                        alt="elizaOS Logo" 
+                        className="h-8 lg:h-12 w-auto"
+                    />
+                </a>
             </div>
             
             {/* Mobile: Bottom Panel, Desktop: Left Panel - Controls */}
-            <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-3 lg:gap-6 p-4 lg:p-8 pt-4 lg:pt-24 overflow-y-auto h-1/2 lg:h-auto">
+            <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-4 lg:pt-24 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
                 <div className="text-center lg:text-left">
                     <h1 className="text-white text-xl lg:text-3xl tracking-wider font-neue-haas-display font-thin">
                         Put on your elizaOS hat
@@ -401,10 +408,10 @@ export const PhotoEditor: React.FC = () => {
             </div>
 
             {/* Mobile: Top Panel, Desktop: Right Panel - Canvas */}
-            <div className="order-1 lg:order-2 w-full lg:w-2/3 flex items-center justify-center p-4 lg:p-8 h-1/2 lg:h-auto pt-16 lg:pt-8">
+            <div className="order-1 lg:order-2 w-full lg:w-2/3 flex items-center justify-center p-4 lg:p-8 flex-1 lg:flex-none lg:h-auto pt-16 lg:pt-8">
                 <div
                     ref={containerRef}
-                    className="relative w-full aspect-square lg:h-[80vh] lg:max-h-[800px] max-w-[500px] lg:max-w-none lg:w-full border-2 lg:border-3 border-white rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
+                    className="relative w-full aspect-square lg:h-[80vh] lg:max-h-[800px] max-w-[400px] lg:max-w-none lg:w-full border-2 lg:border-3 border-white rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
                     onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUp}
                     onMouseLeave={handleMouseUp}
@@ -446,23 +453,6 @@ export const PhotoEditor: React.FC = () => {
                     {status.message}
                 </div>
             )}
-
-            <div className="fixed bottom-2 right-2 lg:bottom-4 lg:right-4">
-                <a
-                    href="https://elizaos.ai"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs lg:text-sm text-white hover:text-white/80 font-neue-haas-text font-normal transition-colors"
-                >
-                    <span>© 2025 elizaOS™</span>
-                    <svg
-                        className="w-3 h-3 lg:w-4 lg:h-4 fill-current"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                    >
-                    </svg>
-                </a>
-            </div>
         </div>
     );
 };
