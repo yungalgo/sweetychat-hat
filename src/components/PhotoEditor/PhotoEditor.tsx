@@ -18,6 +18,7 @@ export const PhotoEditor: React.FC = () => {
     });
     const [originalImageSize, setOriginalImageSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
     const [status, setStatus] = useState<{ message: string; type: 'error' | 'success' } | null>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -69,6 +70,12 @@ export const PhotoEditor: React.FC = () => {
         };
     }, []);
 
+    const handleWindowControl = useCallback(() => {
+        setShowModal(true);
+        setTimeout(() => {
+            setShowModal(false);
+        }, 2000);
+    }, []);
 
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
         e.preventDefault();
@@ -360,9 +367,9 @@ export const PhotoEditor: React.FC = () => {
                     <div className="title-bar">
                         <div className="title-bar-text">Hat Editor</div>
                         <div className="title-bar-controls">
-                            <button aria-label="Minimize"></button>
-                            <button aria-label="Maximize"></button>
-                            <button aria-label="Close"></button>
+                            <button aria-label="Minimize" onClick={handleWindowControl}></button>
+                            <button aria-label="Maximize" onClick={handleWindowControl}></button>
+                            <button aria-label="Close" onClick={handleWindowControl}></button>
                         </div>
                     </div>
                     <div className="window-body" style={{ padding: '0', margin: '0' }}>
@@ -410,6 +417,23 @@ export const PhotoEditor: React.FC = () => {
                     opacity-90 animate-fade-out`}
                 >
                     {status.message}
+                </div>
+            )}
+
+            {/* Glassmorphism Modal */}
+            {showModal && (
+                <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <div 
+                        className="backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 shadow-2xl p-8 lg:p-12 max-w-md w-full mx-4 transform transition-all duration-300 ease-out scale-100"
+                        onClick={() => setShowModal(false)}
+                    >
+                        <div className="text-center">
+                            <h2 className="text-pink-500 text-xl lg:text-2xl tracking-wider font-neue-haas-display font-medium">
+                                made with love by<br />
+                                sweetychat technology systems
+                            </h2>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
