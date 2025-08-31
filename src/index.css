@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Override xp.css window-body styles for canvas */
+.window .window-body {
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Override button text color to dark grey */
+button {
+  color: #333 !important;
+}
+
+fieldset button {
+  color: #333 !important;
+}

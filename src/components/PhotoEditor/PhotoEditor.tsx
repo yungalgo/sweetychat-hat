@@ -3,6 +3,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import rightImage from '../../assets/right.png';
 import leftImage from '../../assets/left.png';
 import sweetychatLogo from '../../assets/horizontal-logo.svg';
+import backgroundImage from '../../assets/background.jpeg';
 import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
@@ -240,127 +241,154 @@ export const PhotoEditor: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row w-full min-h-screen bg-[#0b35f1] text-white overflow-hidden">
-            <div className="absolute top-4 left-4 lg:top-8 lg:left-8 z-20">
+        <div 
+            className="flex flex-col lg:flex-row w-full min-h-screen text-white overflow-hidden"
+            style={{
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: '#0b35f1'
+            }}
+        >
+            <div className="absolute top-2 left-4 lg:top-4 lg:left-8 z-20">
                 <img 
                     src={sweetychatLogo} 
                     alt="Sweetychat Logo" 
-                    className="h-10 lg:h-16 w-auto"
+                    className="h-14 lg:h-20 w-auto"
                 />
             </div>
             
             {/* Mobile: Bottom Panel, Desktop: Left Panel - Controls */}
-            <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-4 lg:pt-32 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
+            <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-20 lg:pt-28 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-white text-xl lg:text-3xl tracking-wider font-neue-haas-display font-thin">
-                        Put on your Sweetychat hat
+                    <h1 className="text-gray-800 text-xl lg:text-3xl tracking-wider font-neue-haas-display font-medium">
+                        Put on your Sweetyhat
                     </h1>
                 </div>
 
-                <div className="w-full">
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleBaseImageUpload}
-                        className="w-full p-3 border-2 border-white rounded-lg bg-white/10 text-white cursor-pointer font-neue-haas-text font-normal transition-all hover:border-white hover:bg-white/20"
-                    />
-                </div>
+                <fieldset className="mb-4">
+                    <div className="field-row">
+                        <input
+                            id="file-upload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleBaseImageUpload}
+                            className="w-full"
+                        />
+                    </div>
+                </fieldset>
 
 
 
-                <div className="flex flex-col gap-2 lg:gap-3">
-                    {/* Rotate buttons */}
-                    <div className="flex gap-2 lg:gap-3">
-                        <button
-                            onClick={() => handleRotate('left')}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                        >
-                            ⟲ Rotate left
-                        </button>
-                        <button
-                            onClick={() => handleRotate('right')}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                        >
-                            ⟳ Rotate right
-                        </button>
+                <fieldset>
+                    <div className="flex flex-col gap-2">
+                        {/* Rotate buttons */}
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => handleRotate('left')}
+                                className="flex-1"
+                            >
+                                ⟲ Rotate left
+                            </button>
+                            <button
+                                onClick={() => handleRotate('right')}
+                                className="flex-1"
+                            >
+                                ⟳ Rotate right
+                            </button>
+                        </div>
+                        
+                        {/* Scale buttons */}
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => handleScale('up')}
+                                className="flex-1"
+                            >
+                                ⊕ Scale up
+                            </button>
+                            <button
+                                onClick={() => handleScale('down')}
+                                className="flex-1"
+                            >
+                                ⊖ Scale down
+                            </button>
+                        </div>
+                        
+                        {/* Flip button */}
+                        <div className="flex gap-2">
+                            <button
+                                onClick={handleFlip}
+                                className="w-full"
+                            >
+                                ↔️ Flip
+                            </button>
+                        </div>
+                        
+                        {/* Reset and Save buttons */}
+                        <div className="flex gap-2">
+                            <button
+                                onClick={handleReset}
+                                className="flex-1"
+                            >
+                                Reset
+                            </button>
+                            <button
+                                onClick={handleSave}
+                                disabled={!baseImage}
+                                className="flex-1"
+                            >
+                                Save image
+                            </button>
+                        </div>
                     </div>
-                    
-                    {/* Scale buttons */}
-                    <div className="flex gap-2 lg:gap-3">
-                        <button
-                            onClick={() => handleScale('up')}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                        >
-                            ⊕ Scale up
-                        </button>
-                        <button
-                            onClick={() => handleScale('down')}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                        >
-                            ⊖ Scale down
-                        </button>
-                    </div>
-                    
-                    {/* Flip button */}
-                    <div className="flex gap-2 lg:gap-3">
-                        <button
-                            onClick={handleFlip}
-                            className="w-full px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                        >
-                            ↔️ Flip
-                        </button>
-                    </div>
-                    
-                    {/* Reset and Save buttons */}
-                    <div className="flex gap-2 lg:gap-3">
-                        <button
-                            onClick={handleReset}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                        >
-                            Reset
-                        </button>
-                        <button
-                            onClick={handleSave}
-                            disabled={!baseImage}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
-                        >
-                            Save image
-                        </button>
-                    </div>
-                </div>
+                </fieldset>
             </div>
 
             {/* Mobile: Top Panel, Desktop: Right Panel - Canvas */}
             <div className="order-1 lg:order-2 w-full lg:w-2/3 flex items-center justify-center p-4 lg:p-8 flex-1 lg:flex-none lg:h-auto pt-16 lg:pt-8">
-                <div
-                    ref={containerRef}
-                    className="relative w-full aspect-square lg:h-[80vh] lg:max-h-[800px] max-w-[400px] lg:max-w-none lg:w-full border-2 lg:border-3 border-white rounded-xl overflow-hidden touch-none bg-[#2a2a2a] shadow-lg"
-                    onMouseMove={handleMouseMove}
-                    onMouseUp={handleMouseUp}
-                    onMouseLeave={handleMouseUp}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
-                    onTouchCancel={handleTouchEnd}
-                >
-                    {baseImage && (
-                        <img src={baseImage} alt="Base" className="w-full h-full object-contain" />
-                    )}
+                <div className="window w-full max-w-[600px] lg:max-w-[700px]">
+                    <div className="title-bar">
+                        <div className="title-bar-text">Hat Editor</div>
+                        <div className="title-bar-controls">
+                            <button aria-label="Minimize"></button>
+                            <button aria-label="Maximize"></button>
+                            <button aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div className="window-body" style={{ padding: '0', margin: '0' }}>
+                        <div
+                            ref={containerRef}
+                            className="relative overflow-hidden touch-none bg-[#2a2a2a] aspect-square w-full h-full"
+                            style={{ maxHeight: '600px' }}
+                            onMouseMove={handleMouseMove}
+                            onMouseUp={handleMouseUp}
+                            onMouseLeave={handleMouseUp}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                            onTouchCancel={handleTouchEnd}
+                        >
+                            {baseImage && (
+                                <img src={baseImage} alt="Base" className="w-full h-full object-contain" />
+                            )}
 
-                    <div
-                        ref={overlayRef}
-                        style={getOverlayStyle()}
-                        className="absolute top-1/2 left-1/2 cursor-move touch-none filter drop-shadow-lg"
-                        onMouseDown={handleMouseDown}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
-                    >
-                        <img
-                            src={currentHatImage}
-                            alt="Overlay"
-                            className="w-[400px] h-auto select-none"
-                            draggable={false}
-                        />
+                            <div
+                                ref={overlayRef}
+                                style={getOverlayStyle()}
+                                className="absolute top-1/2 left-1/2 cursor-move touch-none filter drop-shadow-lg"
+                                onMouseDown={handleMouseDown}
+                                onTouchStart={handleTouchStart}
+                                onTouchMove={handleTouchMove}
+                                onTouchEnd={handleTouchEnd}
+                            >
+                                <img
+                                    src={currentHatImage}
+                                    alt="Overlay"
+                                    className="w-[400px] h-auto select-none"
+                                    draggable={false}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
