@@ -245,12 +245,12 @@ export const PhotoEditor: React.FC = () => {
                 <img 
                     src={sweetychatLogo} 
                     alt="Sweetychat Logo" 
-                    className="h-8 lg:h-12 w-auto"
+                    className="h-10 lg:h-16 w-auto"
                 />
             </div>
             
             {/* Mobile: Bottom Panel, Desktop: Left Panel - Controls */}
-            <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-4 lg:pt-24 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
+            <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-4 lg:pt-32 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
                 <div className="text-center lg:text-left">
                     <h1 className="text-white text-xl lg:text-3xl tracking-wider font-neue-haas-display font-thin">
                         Put on your Sweetychat hat
