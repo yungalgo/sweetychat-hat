@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.ececaeb0.css",
-    "main.js": "/static/js/main.52d6024c.js",
+    "main.js": "/static/js/main.a964a9f7.js",
     "static/js/453.67636c83.chunk.js": "/static/js/453.67636c83.chunk.js",
     "static/media/horizontal-logo.svg": "/static/media/horizontal-logo.b9e7b4bbae39283e12f1f9ce7c5f8355.svg",
+    "static/media/left.png": "/static/media/left.acd08307ca5431326651.png",
+    "static/media/right.png": "/static/media/right.e66d8342b31df6809cdb.png",
     "static/media/background.jpeg": "/static/media/background.ac7b18046f24c5c25439.jpeg",
-    "static/media/right.png": "/static/media/right.a4b6d733018f1312077e.png",
-    "static/media/left.png": "/static/media/left.a65fe1a6b13736bfc4c1.png",
     "static/media/PerfectDOSVGA437Win.woff": "/static/media/PerfectDOSVGA437Win.86368cc9dec15d71c965.woff",
     "static/media/PerfectDOSVGA437Win.woff2": "/static/media/PerfectDOSVGA437Win.7dc718899b215fa16aa7.woff2",
     "static/media/RuneScape-Bold-12.otf": "/static/media/RuneScape-Bold-12.32da1c931ee534d5fe81.otf",
@@ -16,11 +16,11 @@
     "static/media/ms_sans_serif_bold.woff2": "/static/media/ms_sans_serif_bold.7fcf57cc6e87ecddbf64.woff2",
     "index.html": "/index.html",
     "main.ececaeb0.css.map": "/static/css/main.ececaeb0.css.map",
-    "main.52d6024c.js.map": "/static/js/main.52d6024c.js.map",
+    "main.a964a9f7.js.map": "/static/js/main.a964a9f7.js.map",
     "453.67636c83.chunk.js.map": "/static/js/453.67636c83.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ececaeb0.css",
-    "static/js/main.52d6024c.js"
+    "static/js/main.a964a9f7.js"
   ]
 }
