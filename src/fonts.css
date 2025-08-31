@@ -1,41 +1,22 @@
-/* Neue Haas Grotesk Display Fonts - for large type (24pt+) */
+/* Font imports */
 @font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('./assets/fonts/NHaasGroteskDSStd-Thin.otf') format('opentype');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('./assets/fonts/NHaasGroteskDSStd-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('./assets/fonts/NHaasGroteskDSStd-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('./assets/fonts/NHaasGroteskDSStd-Bold.otf') format('opentype');
+  font-family: 'RuneScape';
+  src: url('./assets/fonts/RuneScape-Bold-12.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
-/* Neue Haas Grotesk Text Fonts - for small type (6pt-16pt) */
-@font-face {
-  font-family: 'Neue Haas Grotesk Text';
-  src: url('./assets/fonts/NHaasGroteskTXStd-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+/* Font utility classes */
+.font-runescape {
+  font-family: 'RuneScape', sans-serif;
+}
+
+/* Legacy class names for compatibility */
+.font-neue-haas-display {
+  font-family: 'RuneScape', sans-serif;
+}
+
+.font-neue-haas-text {
+  font-family: 'RuneScape', sans-serif;
 }

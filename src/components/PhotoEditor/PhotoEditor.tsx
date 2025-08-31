@@ -1,22 +1,13 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-// Blue hat images
-import blueRightImage from '../../assets/blue-right.png';
-import blueLeftImage from '../../assets/blue-left.png';
-import blueRightTapeImage from '../../assets/blue-right-tape.png';
-import blueLeftTapeImage from '../../assets/blue-left-tape.png';
-// Orange hat images
-import orangeRightImage from '../../assets/orange-right.png';
-import orangeLeftImage from '../../assets/orange-left.png';
-import orangeRightTapeImage from '../../assets/orange-right-tape.png';
-import orangeLeftTapeImage from '../../assets/orange-left-tape.png';
-import elizaLogo from '../../assets/Logo_ElizaOS_White_RGB.svg';
+// Hat images
+import rightImage from '../../assets/right.png';
+import leftImage from '../../assets/left.png';
+import sweetychatLogo from '../../assets/horizontal-logo.svg';
 import { Position, Transform } from './types';
 
 export const PhotoEditor: React.FC = () => {
     const [baseImage, setBaseImage] = useState<string>('');
-    const [hatColor, setHatColor] = useState<'orange' | 'blue'>('orange'); // Orange is default
-    const [currentHatImage, setCurrentHatImage] = useState<string>(orangeRightImage);
-    const [hasTape, setHasTape] = useState<boolean>(false);
+    const [currentHatImage, setCurrentHatImage] = useState<string>(rightImage);
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
     const [transform, setTransform] = useState<Transform>({
         position: { x: 0, y: 0 },
@@ -32,23 +23,6 @@ export const PhotoEditor: React.FC = () => {
     const isDragging = useRef(false);
     const dragStart = useRef<Position>({ x: 0, y: 0 });
     const statusTimeoutRef = useRef<NodeJS.Timeout>();
-
-    // Helper function to get the correct hat image based on color, orientation, and tape
-    const getHatImage = useCallback((color: 'orange' | 'blue', flipped: boolean, tape: boolean) => {
-        if (color === 'orange') {
-            if (flipped) {
-                return tape ? orangeLeftTapeImage : orangeLeftImage;
-            } else {
-                return tape ? orangeRightTapeImage : orangeRightImage;
-            }
-        } else {
-            if (flipped) {
-                return tape ? blueLeftTapeImage : blueLeftImage;
-            } else {
-                return tape ? blueRightTapeImage : blueRightImage;
-            }
-        }
-    }, []);
 
 
     const handleBaseImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,23 +140,10 @@ export const PhotoEditor: React.FC = () => {
     const handleFlip = useCallback(() => {
         setIsFlipped(prev => {
             const newFlipped = !prev;
-            setCurrentHatImage(getHatImage(hatColor, newFlipped, hasTape));
+            setCurrentHatImage(newFlipped ? leftImage : rightImage);
             return newFlipped;
         });
-    }, [hatColor, hasTape, getHatImage]);
-
-    const handleTape = useCallback(() => {
-        setHasTape(prev => {
-            const newTape = !prev;
-            setCurrentHatImage(getHatImage(hatColor, isFlipped, newTape));
-            return newTape;
-        });
-    }, [hatColor, isFlipped, getHatImage]);
-
-    const handleColorChange = useCallback((newColor: 'orange' | 'blue') => {
-        setHatColor(newColor);
-        setCurrentHatImage(getHatImage(newColor, isFlipped, hasTape));
-    }, [isFlipped, hasTape, getHatImage]);
+    }, []);
 
     const handleReset = useCallback(() => {
         setTransform({
@@ -191,10 +152,9 @@ export const PhotoEditor: React.FC = () => {
             scale: 1,
             flipX: false,
         });
-        setHasTape(false);
         setIsFlipped(false);
-        setCurrentHatImage(getHatImage(hatColor, false, false));
-    }, [hatColor, getHatImage]);
+        setCurrentHatImage(rightImage);
+    }, []);
 
     const handleSave = useCallback(async () => {
         if (!baseImage || !overlayRef.current || !containerRef.current) {
@@ -259,7 +219,7 @@ export const PhotoEditor: React.FC = () => {
             }
 
             const link = document.createElement('a');
-            link.download = 'eliza-hat.png';
+            link.download = 'sweetychat-hat.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
 
@@ -282,25 +242,18 @@ export const PhotoEditor: React.FC = () => {
     return (
         <div className="flex flex-col lg:flex-row w-full min-h-screen bg-[#0b35f1] text-white overflow-hidden">
             <div className="absolute top-4 left-4 lg:top-8 lg:left-8 z-20">
-                <a 
-                    href="https://elizaos.ai"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block hover:opacity-80 transition-opacity"
-                >
-                    <img 
-                        src={elizaLogo} 
-                        alt="elizaOS Logo" 
-                        className="h-8 lg:h-12 w-auto"
-                    />
-                </a>
+                <img 
+                    src={sweetychatLogo} 
+                    alt="Sweetychat Logo" 
+                    className="h-8 lg:h-12 w-auto"
+                />
             </div>
             
             {/* Mobile: Bottom Panel, Desktop: Left Panel - Controls */}
             <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-4 lg:pt-24 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
                 <div className="text-center lg:text-left">
                     <h1 className="text-white text-xl lg:text-3xl tracking-wider font-neue-haas-display font-thin">
-                        Put on your elizaOS hat
+                        Put on your Sweetychat hat
                     </h1>
                 </div>
 
@@ -313,31 +266,7 @@ export const PhotoEditor: React.FC = () => {
                     />
                 </div>
 
-                {/* Color Selector */}
-                <div className="w-full">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex gap-2">
-                            <button
-                                onClick={() => handleColorChange('orange')}
-                                className={`flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all
-                                    ${hatColor === 'orange' 
-                                        ? 'bg-orange-500 text-white hover:bg-orange-600' 
-                                        : 'bg-white/20 text-white hover:bg-white/30'}`}
-                            >
-                                🟠 Orange
-                            </button>
-                            <button
-                                onClick={() => handleColorChange('blue')}
-                                className={`flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all
-                                    ${hatColor === 'blue' 
-                                        ? 'bg-blue-500 text-white hover:bg-blue-600' 
-                                        : 'bg-white/20 text-white hover:bg-white/30'}`}
-                            >
-                                🔵 Blue
-                            </button>
-                        </div>
-                    </div>
-                </div>
+
 
                 <div className="flex flex-col gap-2 lg:gap-3">
                     {/* Rotate buttons */}
@@ -372,19 +301,13 @@ export const PhotoEditor: React.FC = () => {
                         </button>
                     </div>
                     
-                    {/* Flip and Tape buttons */}
+                    {/* Flip button */}
                     <div className="flex gap-2 lg:gap-3">
                         <button
                             onClick={handleFlip}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                            className="w-full px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
                         >
                             ↔️ Flip
-                        </button>
-                        <button
-                            onClick={handleTape}
-                            className="flex-1 px-3 py-2 lg:px-4 lg:py-3 rounded-lg bg-white text-[#0b35f1] cursor-pointer text-sm lg:text-base font-neue-haas-text font-normal tracking-wider transition-all hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                        >
-                            🔧 Duct tape
                         </button>
                     </div>
                     

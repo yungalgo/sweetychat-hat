@@ -2,7 +2,7 @@
 
 
 
-  "name": "eliza-hat",
+  "name": "sweetychat-hat",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +20,7 @@
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
-  "homepage": "https://yungalgo.github.io/eliza-hat",
+  "homepage": "https://yungalgo.github.io/sweetychat-hat",
   "scripts": {
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build",
