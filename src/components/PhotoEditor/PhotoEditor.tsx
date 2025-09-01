@@ -219,18 +219,15 @@ export const PhotoEditor: React.FC = () => {
                 }
                 ctx.scale(transform.scale, transform.scale);
 
-                // Match the responsive CSS hat width: w-[200px] sm:w-[300px] md:w-[400px]
-                const containerWidth = containerRect.width;
-                let responsiveHatWidth;
-                if (containerWidth >= 768) { // md breakpoint
-                    responsiveHatWidth = 400;
-                } else if (containerWidth >= 640) { // sm breakpoint  
-                    responsiveHatWidth = 300;
-                } else { // mobile
-                    responsiveHatWidth = 200;
-                }
+                // Get the ACTUAL hat size from the DOM instead of guessing breakpoints
+                const actualHatRect = overlayImg.getBoundingClientRect();
+                const actualHatWidth = actualHatRect.width;
                 
-                const overlayWidth = responsiveHatWidth * scaleX;
+                // Divide by transform.scale to get the unscaled size since getBoundingClientRect 
+                // returns the already-scaled size, but we apply scaling again in canvas
+                const unscaledHatWidth = actualHatWidth / transform.scale;
+                
+                const overlayWidth = unscaledHatWidth * scaleX;
                 const overlayHeight = (overlayWidth * hatImg.height) / hatImg.width;
                 ctx.drawImage(hatImg, -overlayWidth / 2, -overlayHeight / 2, overlayWidth, overlayHeight);
 
