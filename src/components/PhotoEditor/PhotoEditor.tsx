@@ -219,9 +219,18 @@ export const PhotoEditor: React.FC = () => {
                 }
                 ctx.scale(transform.scale, transform.scale);
 
-                // Get the actual displayed size of the overlay image
-                const overlayRect = overlayImg.getBoundingClientRect();
-                const overlayWidth = overlayRect.width * scaleX;
+                // Match the responsive CSS hat width: w-[200px] sm:w-[300px] md:w-[400px]
+                const containerWidth = containerRect.width;
+                let responsiveHatWidth;
+                if (containerWidth >= 768) { // md breakpoint
+                    responsiveHatWidth = 400;
+                } else if (containerWidth >= 640) { // sm breakpoint  
+                    responsiveHatWidth = 300;
+                } else { // mobile
+                    responsiveHatWidth = 200;
+                }
+                
+                const overlayWidth = responsiveHatWidth * scaleX;
                 const overlayHeight = (overlayWidth * hatImg.height) / hatImg.width;
                 ctx.drawImage(hatImg, -overlayWidth / 2, -overlayHeight / 2, overlayWidth, overlayHeight);
 
@@ -364,7 +373,6 @@ export const PhotoEditor: React.FC = () => {
             {/* Mobile: Top Panel, Desktop: Right Panel - Canvas */}
             <div className="order-1 lg:order-2 w-full lg:w-2/3 flex items-center justify-center p-4 lg:p-8 flex-1 lg:flex-none lg:h-auto pt-16 lg:pt-8">
                 <div 
-                    ref={containerRef}
                     className="window w-full max-w-[400px] lg:max-w-none lg:w-full"
                 >
                     <div className="title-bar">
@@ -377,7 +385,8 @@ export const PhotoEditor: React.FC = () => {
                     </div>
                     <div className="window-body" style={{ padding: '0', margin: '0' }}>
                         <div
-                            className="relative w-full aspect-square lg:h-[80vh] lg:max-h-[800px] overflow-hidden touch-none bg-[#2a2a2a]"
+                            ref={containerRef}
+                            className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] overflow-hidden touch-none bg-[#2a2a2a]"
                             onMouseMove={handleMouseMove}
                             onMouseUp={handleMouseUp}
                             onMouseLeave={handleMouseUp}
@@ -401,7 +410,7 @@ export const PhotoEditor: React.FC = () => {
                                 <img
                                     src={currentHatImage}
                                     alt="Overlay"
-                                    className="w-[400px] h-auto select-none"
+                                    className="w-[200px] sm:w-[300px] md:w-[400px] h-auto select-none"
                                     draggable={false}
                                 />
                             </div>
