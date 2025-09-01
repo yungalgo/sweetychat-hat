@@ -274,6 +274,13 @@ export const PhotoEditor: React.FC = () => {
                 />
             </div>
             
+            {/* Version indicator with Glass Effect */}
+            <div className="absolute top-2 right-4 lg:top-4 lg:right-8 z-20">
+                <div className="backdrop-blur-md bg-white/10 rounded-xl border border-white/20 shadow-lg px-3 py-1">
+                    <span className="text-xs text-gray-600 font-mono">v1.0</span>
+                </div>
+            </div>
+            
             {/* Mobile: Bottom Panel, Desktop: Left Panel - Controls */}
             <div className="order-2 lg:order-1 w-full lg:w-1/3 flex flex-col gap-2 lg:gap-6 p-4 lg:p-8 pt-20 lg:pt-28 overflow-y-auto flex-1 lg:flex-none lg:h-auto">
                 {/* Title Panel with Glass Effect */}
